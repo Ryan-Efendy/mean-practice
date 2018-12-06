@@ -7,12 +7,13 @@
         <mat-panel-description>{{post.content}}</mat-panel-description>
         <mat-action-row>
             <!-- (click)="nextStep()" -->
-            <button
+            <a
                 mat-button
                 color="primary"
+                [routerLink]="['/edit', post.id]"
             >
                 EDIT
-            </button>
+            </a>
             <!-- (click)="prevStep()" -->
             <button
                 mat-button

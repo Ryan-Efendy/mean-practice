@@ -40,12 +40,14 @@ export class PostService {
 
   addPosts(title: string, content: string) {
     const post: Post = { id: null, title, content };
-    this.http.post<{ message: string, postId: string }>('http://localhost:3000/api/posts', post).subscribe(responseData => {
-      // console.log(responseData.message);
-      post.id = responseData.postId;
-      this.posts.push(post);
-      this.postsUpdated.next([...this.posts]);
-    });
+    this.http
+      .post<{ message: string; postId: string }>('http://localhost:3000/api/posts', post)
+      .subscribe(responseData => {
+        // console.log(responseData.message);
+        post.id = responseData.postId;
+        this.posts.push(post);
+        this.postsUpdated.next([...this.posts]);
+      });
   }
 
   deletePost(postId: string) {
@@ -53,5 +55,14 @@ export class PostService {
       this.posts = this.posts.filter((post: Post) => post.id !== postId);
       this.postsUpdated.next([...this.posts]);
     });
+  }
+
+  getPost(postId: string) {
+    return { ...this.posts.find((post: Post) => post.id === postId) };
+  }
+
+  updatePost(id: string, title: string, content: string) {
+    const post: Post = { id, title, content };
+    this.http.put(`http://localhost:3000/api/posts/${id}`, post).subscribe(response => console.log(response));
   }
 }
