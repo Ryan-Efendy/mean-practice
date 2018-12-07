@@ -23,7 +23,9 @@ export class PostCreateComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.isEdit = paramMap.has('postId');
       this.postId = this.isEdit ? paramMap.get('postId') : null;
-      this.post = this.postId ? this.postService.getPost(this.postId) : null;
+      this.postService.getPost(this.postId).subscribe(postData => {
+        this.post = { id: postData._id, title: postData.title, content: postData.content };
+      });
     });
   }
 
@@ -35,6 +37,6 @@ export class PostCreateComponent implements OnInit {
       ? this.postService.updatePost(this.postId, form.value.title, form.value.content)
       : this.postService.addPosts(form.value.title, form.value.content);
 
-      form.resetForm();
+    form.resetForm();
   }
 }
