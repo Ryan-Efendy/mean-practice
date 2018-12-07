@@ -13,6 +13,7 @@ export class PostCreateComponent implements OnInit {
   title = '';
   content = '';
   post: Post;
+  isLoading = false;
   private isEdit = false;
   private postId: string;
   // @Output() postCreated = new EventEmitter<Post>();
@@ -23,7 +24,9 @@ export class PostCreateComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.isEdit = paramMap.has('postId');
       this.postId = this.isEdit ? paramMap.get('postId') : null;
+      this.isLoading = true;
       this.postService.getPost(this.postId).subscribe(postData => {
+        this.isLoading = false;
         this.post = { id: postData._id, title: postData.title, content: postData.content };
       });
     });
@@ -33,6 +36,7 @@ export class PostCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     this.isEdit
       ? this.postService.updatePost(this.postId, form.value.title, form.value.content)
       : this.postService.addPosts(form.value.title, form.value.content);
