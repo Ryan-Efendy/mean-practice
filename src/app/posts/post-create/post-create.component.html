@@ -32,7 +32,7 @@
             </div>
             <div
                 class="image-preview"
-                *ngIf="imagePreview && imagePreview !== ''"
+                *ngIf="imagePreview && imagePreview !== '' && form.get('image').valid"
             >
                 <img
                     [src]="imagePreview"
