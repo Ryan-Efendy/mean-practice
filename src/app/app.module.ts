@@ -5,7 +5,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   NO_ERRORS_SCHEMA
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -34,7 +34,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,

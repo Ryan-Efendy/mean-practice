@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const postsRouter = require('./routes/posts');
 
 mongoose
-  .connect('mongodb+srv://ryan:fLUMt7l9Zjpvxomg@cluster0-hyran.mongodb.net/node-angular?retryWrites=true')
+  .connect('mongodb+srv://ryan:fLUMt7l9Zjpvxomg@cluster0-hyran.mongodb.net/node-angular?retryWrites=true', { useNewUrlParser: true })
   .then(() => {
     console.log('connected to database!');
   })

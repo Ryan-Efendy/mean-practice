@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Post } from '../post.model';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PostService } from '../post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -14,6 +14,7 @@ export class PostCreateComponent implements OnInit {
   content = '';
   post: Post;
   isLoading = false;
+  form: FormGroup;
   private isEdit = false;
   private postId: string;
   // @Output() postCreated = new EventEmitter<Post>();
@@ -21,26 +22,48 @@ export class PostCreateComponent implements OnInit {
   constructor(public postService: PostService, public route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.form = new FormGroup({
+      title: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)],
+      }),
+      content: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.isEdit = paramMap.has('postId');
       this.postId = this.isEdit ? paramMap.get('postId') : null;
       this.isLoading = true;
-      this.postService.getPost(this.postId).subscribe(postData => {
-        this.isLoading = false;
-        this.post = { id: postData._id, title: postData.title, content: postData.content };
-      });
+      this.postId
+        ? this.postService.getPost(this.postId).subscribe(postData => {
+            this.isLoading = false;
+            this.post = { id: postData._id, title: postData.title, content: postData.content };
+            this.form.setValue({ title: this.post.title, content: this.post.content });
+          })
+        : (this.isLoading = false);
     });
   }
 
-  onSavePost(form: NgForm) {
-    if (form.invalid) {
+  onSavePost() {
+    if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
     this.isEdit
-      ? this.postService.updatePost(this.postId, form.value.title, form.value.content)
-      : this.postService.addPosts(form.value.title, form.value.content);
+      ? this.postService.updatePost(this.postId, this.form.value.title, this.form.value.content)
+      : this.postService.addPosts(this.form.value.title, this.form.value.content);
 
-    form.resetForm();
+    this.form.reset();
+  }
+
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
+    this.form.get('image').updateValueAndValidity();
+    console.log(file);
+    console.log(this.form);
   }
 }
