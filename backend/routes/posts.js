@@ -33,12 +33,12 @@ router.post('', multer({ storage: storage }).single('image'), (req, res, next) =
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    imagePath: `${url}//images/${req.file.filename}`,
+    imagePath: `${url}/images/${req.file.filename}`,
   });
   post.save().then(({ _id: id, title, content, imagePath }) => {
     res.status(201).json({
       message: 'Post added successfully!',
-      postId: {
+      post: {
         id,
         title,
         content,
@@ -70,11 +70,17 @@ router.delete('/:id', (req, res, next) => {
   });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', multer({ storage: storage }).single('image'), (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if (req.file) {
+    const url = req.protocol + '://' + req.get('host');
+    imagePath = url + '/images/' + req.file.filename;
+  }
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content,
+    imagePath,
   });
   Post.updateOne({ _id: req.params.id }, post).then(result => {
     console.log(result);
