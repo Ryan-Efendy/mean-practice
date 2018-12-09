@@ -1,3 +1,4 @@
+import { SignupComponent } from './auth/signup/signup.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'create', component: PostCreateComponent },
   { path: 'edit/:postId', component: PostCreateComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
 ];
 
 @NgModule({
