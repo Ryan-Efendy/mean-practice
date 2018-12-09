@@ -15,9 +15,10 @@ export class PostService {
   constructor(private http: HttpClient, private router: Router) {}
 
   // immutable
-  getPosts() {
+  getPosts(postsPerPage: number, currentPage: number) {
+    const queryParams = `?pageSize=${postsPerPage}&page=${currentPage}`;
     this.http
-      .get<{ message: string; posts: any }>('http://localhost:3000/api/posts')
+      .get<{ message: string; posts: any }>(`http://localhost:3000/api/posts${queryParams}`)
       .pipe(
         map(postData => {
           return postData.posts.map(({ _id: id, title, content, imagePath }) => {
@@ -58,7 +59,9 @@ export class PostService {
   }
 
   getPost(postId: string) {
-    return this.http.get<{ _id: string; title: string; content: string, imagePath: string }>(`http://localhost:3000/api/posts/${postId}`);
+    return this.http.get<{ _id: string; title: string; content: string; imagePath: string }>(
+      `http://localhost:3000/api/posts/${postId}`
+    );
   }
 
   updatePost(id: string, title: string, content: string, image: File | string) {

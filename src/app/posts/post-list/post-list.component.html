@@ -33,10 +33,10 @@
     </mat-expansion-panel>
 </mat-accordion>
 <mat-paginator
-    [lenght]="totalPosts"
+    [length]="totalPosts"
     [pageSize]="postsPerPage"
     [pageSizeOptions]="pageSizeOptions"
-    (page)="onChangePage()"
+    (page)="onChangePage($event)"
 ></mat-paginator>
 <p
     class="mat-headline info-text"
