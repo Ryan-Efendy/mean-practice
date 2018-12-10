@@ -30,6 +30,7 @@
         <!-- logout -->
         <mat-icon
             *ngIf="userIsAuthenticated"
+            (click)="onLogout()"
             class="example-icon"
             routerLink="/login"
             routerLinkActive="mat-accent"
