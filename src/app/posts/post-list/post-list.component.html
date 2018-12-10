@@ -12,7 +12,7 @@
             >
         </div>
         <mat-panel-description>{{post.content}}</mat-panel-description>
-        <mat-action-row *ngIf="userIsAuthenticated">
+        <mat-action-row *ngIf="userIsAuthenticated && userId == post.creator">
             <!-- (click)="nextStep()" -->
             <a
                 mat-button

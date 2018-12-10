@@ -64,7 +64,7 @@ export class PostService {
   }
 
   getPost(postId: string) {
-    return this.http.get<{ _id: string; title: string; content: string; imagePath: string }>(
+    return this.http.get<{ _id: string; title: string; content: string; imagePath: string, creator: string }>(
       `http://localhost:3000/api/posts/${postId}`
     );
   }
@@ -83,6 +83,7 @@ export class PostService {
         title: title,
         content: content,
         imagePath: image,
+        creator: null
       };
     }
     this.http.put('http://localhost:3000/api/posts/' + id, postData).subscribe(() => {

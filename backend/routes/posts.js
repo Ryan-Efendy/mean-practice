@@ -100,6 +100,7 @@ router.put('/:id', checkAuth, multer({ storage: storage }).single('image'), (req
     title: req.body.title,
     content: req.body.content,
     imagePath,
+    creator: req.userData.userId,
   });
   Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
     if (result.nModified > 0) {
