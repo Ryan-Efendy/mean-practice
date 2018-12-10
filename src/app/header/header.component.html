@@ -11,20 +11,33 @@
         </mat-icon>
         <span class="example-spacer"></span>
         <mat-icon
+            *ngIf="userIsAuthenticated"
             class="example-icon"
             routerLink="/create"
             routerLinkActive="mat-accent"
         >
             edit
         </mat-icon>
+        <!-- login -->
         <mat-icon
+            *ngIf="!userIsAuthenticated"
             class="example-icon"
             routerLink="/login"
             routerLinkActive="mat-accent"
         >
-            forward
+            check
+        </mat-icon>
+        <!-- logout -->
+        <mat-icon
+            *ngIf="userIsAuthenticated"
+            class="example-icon"
+            routerLink="/login"
+            routerLinkActive="mat-accent"
+        >
+            close
         </mat-icon>
         <mat-icon
+            *ngIf="!userIsAuthenticated"
             class="example-icon"
             routerLink="/signup"
             routerLinkActive="mat-accent"
