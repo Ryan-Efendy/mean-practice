@@ -29,7 +29,7 @@ export class AuthService {
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http.post('http://localhost:3000/api/user/signup', authData).subscribe(response => {
-      console.log(response);
+      // console.log(response);
     });
   }
 
@@ -47,7 +47,7 @@ export class AuthService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          console.log(expirationDate);
+          // console.log(expirationDate);
           this.saveAuthData(token, expirationDate);
           this.router.navigate(['/']);
         }
@@ -79,10 +79,10 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
-    console.log('Setting timer: ' + duration);
+    // console.log('Setting timer: ' + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
-    }, duration);
+    }, duration * 1000);
   }
 
   private saveAuthData(token: string, expirationDate: Date) {

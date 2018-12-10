@@ -35,6 +35,7 @@ router.post('', checkAuth, multer({ storage: storage }).single('image'), (req, r
     title: req.body.title,
     content: req.body.content,
     imagePath: `${url}/images/${req.file.filename}`,
+    creator: req.userData.userId,
   });
   post.save().then(({ _id: id, title, content, imagePath }) => {
     res.status(201).json({
@@ -97,7 +98,7 @@ router.put('/:id', checkAuth, multer({ storage: storage }).single('image'), (req
     imagePath,
   });
   Post.updateOne({ _id: req.params.id }, post).then(result => {
-    console.log(result);
+    // console.log(result);
     res.status(200).json({ message: 'Update successful' });
   });
 });
