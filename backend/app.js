@@ -8,7 +8,7 @@ const userRoutes = require('./routes/user');
 
 mongoose
   .connect(
-    'mongodb+srv://ryan:fLUMt7l9Zjpvxomg@cluster0-hyran.mongodb.net/node-angular?retryWrites=true',
+    `mongodb+srv://ryan:${process.env.MONGO_ATLAS_PW}@cluster0-hyran.mongodb.net/node-angular?retryWrites=true`,
     { useNewUrlParser: true }
   )
   .then(() => {
