@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "nodemon server.js",
-    "debug": "node_modules/nodemon/bin/nodemon.js --inspect-brk server.js"
+    "server": "nodemon ./backend/server.js",
+    "debug": "node_modules/nodemon/bin/nodemon.js --inspect-brk ./backend/server.js"
   },
   "private": true,
   "dependencies": {
