@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 const postsRouter = require('./routes/posts');
 const userRoutes = require('./routes/user');
+require('dotenv').config();
 
 mongoose
   .connect(
